@@ -1,0 +1,35 @@
+name: Lint
+
+
+on:
+  push:
+    paths:
+      - '.github/workflows/lint.yml'
+      - '.clj-kondo/config.edn'
+      - 'src/core/**/*.clj'
+      - 'src/core/**/*.cljs'
+      - 'src/core/**/*.cljc'
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+
+env:
+  clj-kondo-version: '2022.08.03'
+
+
+jobs:
+  clj-kondo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup clj-kondo
+        uses: DeLaGuardo/setup-clj-kondo@master
+        with:
+          version: ${{ env.clj-kondo-version }}
+      - name: Lint
+        run: |
+          clj-kondo --lint src/core
+          # --config .clj-kondo/config.edn

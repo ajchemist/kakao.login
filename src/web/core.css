@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.kakao-login-btn
+{
+  width: calc(100% - 2px);
+  @apply h-12 leading-[3rem] relative cursor-pointer bg-[#FADE4B] border-solid border-[#FADE4B] rounded text-center;
+}
+
+
+.kakao-login-btn:before
+{
+    content: "";
+    width: 23px;
+    height: 23px;
+    display: block;
+    background: url(//i.imgur.com/f3Zi58m.png) no-repeat center 100%/100%;
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.kakao-login-btn:after
+{
+  content: "카카오로 원터치 로그인/회원가입";
+  color: "#000";
+  font-size: 14px;
+  font-weight: 700;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}

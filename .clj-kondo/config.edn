@@ -1,0 +1,31 @@
+{:linters
+ {:unused-namespace
+  {:exclude [
+             clojure.spec.alpha
+             clojure.java.io
+             clojure.java.shell
+             clojure.string
+             clojure.test
+             ]}
+
+
+  :unused-referred-var
+  {:exclude {
+             clojure.test [is are deftest testing]
+             }}
+
+
+  :unused-binding
+  {:exclude-destructured-keys-in-fn-args true
+   :exclude-destructured-as              true}
+  }
+
+
+ :lint-as
+ {
+  clojure.core.cache/defcache clojure.core/defrecord
+  }
+
+
+ :skip-comments true
+ }
