@@ -2,9 +2,7 @@
   (:require
    [clojure.string :as str]
    [clj-http.client :as http]
-   [reitit.core :as reitit]
    [user.ring.alpha :as user.ring]
-   [io.github.ajchemist.kakao.login.alpha.util :as util]
    ))
 
 

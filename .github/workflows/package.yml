@@ -131,3 +131,10 @@ jobs:
           git commit -m "$(clojure -X:build:maven-tool print-pom-version) [ci skip]"
           git remote -v
           git push
+
+
+      - name: Discord action job digest notification
+        uses: sarisia/actions-status-discord@v1
+        if: always() # Pick up events even if the job fails or is canceled.
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

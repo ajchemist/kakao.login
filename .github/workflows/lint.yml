@@ -33,3 +33,8 @@ jobs:
         run: |
           clj-kondo --lint src/core
           # --config .clj-kondo/config.edn
+      - name: Discord action job digest notification
+        uses: sarisia/actions-status-discord@v1
+        if: always() # Pick up events even if the job fails or is canceled.
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
