@@ -27,6 +27,18 @@
        :headers        {"Authorization" (str "Bearer " token)}})))
 
 
+(defn access-token-info
+  "Return {:id <id> :kakao_account ...}"
+  [params {:keys [token]}]
+  (client
+    (merge
+      params
+      {:url            "https://kapi.kakao.com/v1/user/access_token_info"
+       :request-method :get
+       :as             :json
+       :headers        {"Authorization" (str "Bearer " token)}})))
+
+
 (comment
   (defn routes
     [{:keys [:oauth2/prefix-uri :oauth2/profile :oauth2/complete-handler] :as opts}]
