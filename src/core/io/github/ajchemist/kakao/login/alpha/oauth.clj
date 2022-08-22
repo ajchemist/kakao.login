@@ -109,7 +109,7 @@
    :redirect_uri (redirect-uri request profile)})
 
 
-(defn- get-access-token
+(defn get-access-token
   [request
    {:keys [access-token-uri client-id client-secret basic-auth?]
     :or   {basic-auth? false} :as profile}]
@@ -124,7 +124,28 @@
           basic-auth?       (add-header-credentials client-id client-secret)
           (not basic-auth?) (add-form-credentials client-id client-secret))))
     (catch clojure.lang.ExceptionInfo e
-      (println (ex-message e) (:http-url (ex-data e))))
+      (println (ex-message e) (get-in (ex-data e) [:request :http-url]) (:body (ex-data e))))
+    (catch Exception e
+      (stacktrace/print-stack-trace e))))
+
+
+(defn refresh-access-token
+  [request
+   {:keys [access-token-uri client-id client-secret basic-auth?]
+    :or   {basic-auth? false} :as profile}]
+  (try
+    (format-access-token
+      (http/post
+        access-token-uri
+        (cond-> {:save-request? true
+                 :accept        :json
+                 :as            :json
+                 :form-params   {:grant_type    "refresh_token"
+                                 :refresh_token (get-in request [:query-params "refresh_token"])}}
+          basic-auth?       (add-header-credentials client-id client-secret)
+          (not basic-auth?) (add-form-credentials client-id client-secret))))
+    (catch clojure.lang.ExceptionInfo e
+      (println (ex-message e) (get-in (ex-data e) [:request :http-url]) (:body (ex-data e))))
     (catch Exception e
       (stacktrace/print-stack-trace e))))
 
