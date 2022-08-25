@@ -11,6 +11,8 @@
    )
   (:import
    java.net.URI
+   java.time.Instant
+   java.util.Date
    ))
 
 
@@ -28,6 +30,15 @@
 (defn- scopes
   [profile]
   (str/join " " (map name (:scopes profile))))
+
+
+(defn- coerce-to-int
+  [n]
+  (if (int? n)
+    n
+    (parse-long n)))
+
+
 
 
 (defn random-state
@@ -92,7 +103,7 @@
   [{{:keys [access_token expires_in refresh_token id_token] :as body} :body}]
   (cond-> {:token      access_token
            :extra-data (dissoc body :access_token :expires_in :refresh_token :id_token)}
-    expires_in    (assoc :expires expires_in)
+    expires_in    (assoc :expires (Date/from (.plusSeconds (Instant/now) (-> expires_in coerce-to-int))))
     refresh_token (assoc :refresh-token refresh_token)
     id_token      (assoc :id-token id_token)))
 
