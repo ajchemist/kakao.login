@@ -4,7 +4,7 @@
   <packaging>jar</packaging>
   <groupId>io.github.ajchemist</groupId>
   <artifactId>kakao.login</artifactId>
-  <version>2022.237.20223</version>
+  <version>2022.237.85929</version>
   <name>kakao.login</name>
   <dependencies>
     <dependency>
