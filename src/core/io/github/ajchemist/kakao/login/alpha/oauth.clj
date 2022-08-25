@@ -4,10 +4,10 @@
    [clojure.string :as str]
    [clj-http.client :as http]
    [ring.util.codec :as codec]
-   [ring.util.request :as request]
    [ring.util.response :as response]
    [crypto.random :as random]
    [user.ring.alpha]
+   [io.github.ajchemist.kakao.login.alpha.ring :as ring]
    )
   (:import
    java.net.URI
@@ -44,7 +44,7 @@
   (let [^String relpath (:redirect-uri profile)]
     (if (.getScheme (URI/create relpath))
       relpath
-      (str (.resolve (java.net.URI/create (request/request-url request)) relpath)))))
+      (str (.resolve (java.net.URI/create (ring/request-url request)) relpath)))))
 
 
 (defn authorize-uri
